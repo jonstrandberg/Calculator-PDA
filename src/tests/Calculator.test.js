@@ -1,0 +1,115 @@
+import React from 'react';
+import Calculator from '../containers/Calculator';
+import {render, fireEvent} from '@testing-library/react';
+
+describe('Calculator', () => {
+  let container;
+  beforeEach(() => {
+    container = render(<Calculator/>)
+  })
+
+  it('should change running total on number enter', () => {
+    const button4 = container.getByTestId('number4');
+    const runningTotal = container.getByTestId('running-total');
+    fireEvent.click(button4);
+    expect(runningTotal.textContent).toEqual('4');
+  })
+  it('should be able to add', () => {
+    const button1 = container.getByTestId('number1')
+    const operatorAdd = container.getByTestId('operator-add')
+    const button4 = container.getByTestId('number4')
+    const operatorEquals = container.getByTestId('operator-equals')
+    const runningTotal = container.getByTestId('running-total')
+    fireEvent.click(button1)
+    fireEvent.click(operatorAdd)
+    fireEvent.click(button4)
+    fireEvent.click(operatorEquals)
+    expect(runningTotal.textContent).toEqual('5')
+  })
+  it('should be able to subtract', () => {
+    const button7 = container.getByTestId('number7')
+    const operatorSubtract = container.getByTestId('operator-subtract')
+    const button4 = container.getByTestId('number4')
+    const operatorEquals = container.getByTestId('operator-equals')
+    const runningTotal = container.getByTestId('running-total')
+    fireEvent.click(button7)
+    fireEvent.click(operatorSubtract)
+    fireEvent.click(button4)
+    fireEvent.click(operatorEquals)
+    expect(runningTotal.textContent).toEqual('3')
+  })
+  it('should be able to multiply', () => {
+    const button3 = container.getByTestId('number3')
+    const operatorMultiply = container.getByTestId('operator-multiply')
+    const button5 = container.getByTestId('number5')
+    const operatorEquals = container.getByTestId('operator-equals')
+    const runningTotal = container.getByTestId('running-total')
+    fireEvent.click(button3)
+    fireEvent.click(operatorMultiply)
+    fireEvent.click(button5)
+    fireEvent.click(operatorEquals)
+    expect(runningTotal.textContent).toEqual('15')
+  })
+  it('should be able to divide', () => {
+    const button2 = container.getByTestId('number2')
+    const button1 = container.getByTestId('number1')
+    const operatorDivide = container.getByTestId('operator-divide')
+    const button7 = container.getByTestId('number7')
+    const operatorEquals = container.getByTestId('operator-equals')
+    const runningTotal = container.getByTestId('running-total')
+    fireEvent.click(button2)
+    fireEvent.click(button1)
+    fireEvent.click(operatorDivide)
+    fireEvent.click(button7)
+    fireEvent.click(operatorEquals)
+    expect(runningTotal.textContent).toEqual('3')
+  })
+  it('should be able to concatenate multiple numbers', () => {
+    const button2 = container.getByTestId('number2')
+    const button3 = container.getByTestId('number3')
+    const button4 = container.getByTestId('number4')
+    const runningTotal = container.getByTestId('running-total')
+    fireEvent.click(button2)
+    fireEvent.click(button3)
+    fireEvent.click(button4)
+    expect(runningTotal.textContent).toEqual('234')
+  })
+  it('should be able to chain multiple operations together', () => {
+    const button4 = container.getByTestId('number4')
+    const operatorMultiply = container.getByTestId('operator-multiply')
+    const button8 = container.getByTestId('number8')
+    const operatorAdd = container.getByTestId('operator-add')
+    const button3 = container.getByTestId('number3')
+    const operatorEquals = container.getByTestId('operator-equals')
+    const runningTotal = container.getByTestId('running-total')
+    fireEvent.click(button4)
+    fireEvent.click(operatorMultiply)
+    fireEvent.click(button8)
+    fireEvent.click(operatorAdd)
+    fireEvent.click(button3)
+    fireEvent.click(operatorEquals)
+    expect(runningTotal.textContent).toEqual('35')
+  })
+  it('should be able to clear the running total without affecting the calculation', () => {
+    const button3 = container.getByTestId('number3')
+    const operatorMultiply = container.getByTestId('operator-multiply')
+    const button9 = container.getByTestId('number9')
+    const operatorEquals = container.getByTestId('operator-equals')
+    const clear = container.getByTestId('clear')
+    const operatorAdd = container.getByTestId('operator-add')
+    const button2 = container.getByTestId('number2')
+    const newOperatorEquals = container.getByTestId('operator-equals')
+    const runningTotal = container.getByTestId('running-total')
+    fireEvent.click(button3)
+    fireEvent.click(operatorMultiply)
+    fireEvent.click(button9)
+    fireEvent.click(operatorEquals)
+    fireEvent.click(clear)
+    fireEvent.click(operatorAdd)
+    fireEvent.click(button2)
+    fireEvent.click(newOperatorEquals)
+    expect(runningTotal.textContent).toEqual('29')
+  })
+
+})
+
